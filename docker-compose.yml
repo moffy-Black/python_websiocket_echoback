@@ -5,6 +5,7 @@ services:
         build: .
         container_name: 'python3'
         working_dir: '/root/'
+        command: bash -c "chmod 777 /root/app/scripts/run.sh && /root/app/scripts/run.sh"
         tty: true
         volumes:
             - ./app:/root/app
