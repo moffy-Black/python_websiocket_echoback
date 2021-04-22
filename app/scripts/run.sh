@@ -1,1 +1,1 @@
-python /root/app/websocket_ipv4.py
+python /root/app/websocket_ipv6.py
