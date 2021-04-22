@@ -4,6 +4,7 @@ import sys
 HOST = 'localhost'
 PORT = 8080
 s = None
+message = sys.argv[1]
 
 for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM):
     af, socktype, proto, canonnam, sa = res
@@ -23,6 +24,6 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 with s:
-    s.sendall(b'Hello world')
+    s.sendall(message.encode('utf-8'))
     data = s.recv(1024)
 print('Received', repr(data))
