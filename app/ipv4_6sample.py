@@ -3,30 +3,31 @@ import sys
 
 HOST = None
 PORT = 8080
-s = None
+server_socket = None
+
 
 for res in socket.getaddrinfo(HOST, PORT, socket.AF_UNSPEC, socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
     af, socktype, proto, canonname, sa = res
     try:
-        s = socket.socket(af, socktype, proto)
+        server_socket = socket.socket(af, socktype, proto)
     except OSError as msg:
-        s = None
+        server_socket = None
         continue
     try:
-        s.bind(sa)
-        s.listen(1)
+        server_socket.bind(sa)
+        server_socket.listen(1)
     except OSError as msg:
-        s.close()
-        s = None
+        server_socket.close()
+        server_socket = None
         continue
     break
-if s is None:
+if server_socket is None:
     print('could not open socket')
     sys.exit(1)
-conn, addr = s.accept()
-with conn:
+client_socket, addr = server_socket.accept()
+with client_socket:
     print('Connected by', addr)
     while True:
-        data = conn.recv(1024)
+        data = client_socket.recv(1024)
         if not data: break
-        conn.send(data)
+        client_socket.send(data)
