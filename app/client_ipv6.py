@@ -1,5 +1,6 @@
 import socket
 import sys
+from datetime import datetime
 
 HOST = 'localhost'
 PORT = 8080
@@ -26,4 +27,4 @@ if s is None:
 with s:
     s.sendall(message.encode('utf-8'))
     data = s.recv(1024)
-print('Received', repr(data))
+print('[{}] Received'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S')), repr(data))
